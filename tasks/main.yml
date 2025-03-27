@@ -10,11 +10,11 @@
 - name: install keyrings
   command: sudo install -m 0755 -d /etc/apt/keyrings
 - name: download docker gpg
-  command: "{{ ansible_distribution }}-vars.yml[{{ docker-gpg }}]"
+  command: "{{ ansible_distribution }}-vars.yml[{{ docker_gpg }}]"
 - name: modify mod
   command: sudo chmod a+r /etc/apt/keyrings/docker.asc
 - name: add the repository to apt sources
-  shell: "{{ ansible_distribution }}-vars.yml[{{ docker-repo }}]"
+  shell: "{{ ansible_distribution }}-vars.yml[{{ docker_repo }}]"
 - name: install the Docker packages
   apt:
     update_cache: yes

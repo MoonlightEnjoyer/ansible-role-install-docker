@@ -1,8 +1,13 @@
 ---
 - name: Converge
   hosts: all
-  gather_facts: false
-  tasks:
-    - name: Include install_docker role
-      include_role:
-        name: "../../tasks"
+  roles:
+    - role: install-docker
+  post_tasks:
+    - name: Ensure docker is installed
+      ansible.builtin.command: "docker run hello-world"
+      register: result
+      changed_when: false
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "{{ result }}"

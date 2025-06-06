@@ -1,5 +1,4 @@
 ---
-- name: include variables
 - name: Create test file
   file:
     path: /test.txt

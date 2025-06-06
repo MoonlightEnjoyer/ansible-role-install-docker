@@ -10,7 +10,7 @@
       - docker-logrotate
       - docker-engine
     state: absent
-- name: Install dns-plugis-core to manage DNF repositories
+- name: Install dnf-plugins-core to manage DNF repositories
   dnf:
     name: dnf-plugins-core
     state: present

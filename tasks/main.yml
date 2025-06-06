@@ -1,33 +1,7 @@
 ---
-- name: include variables
-  include_vars:
-    file: "{{ ansible_distribution }}-vars.yml"
-- name: Create test file
-  file:
-    path: /test.txt
-    state: present
-- name: uninstall conflicting packages
-  shell: for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get -y remove $pkg; done
-- name: install ca-certificates
-  apt:
-    update_cache: yes
-    name:
-      - ca-certificates
-      - curl
-- name: install keyrings
-  command: sudo install -m 0755 -d /etc/apt/keyrings
-- name: download docker gpg
-  command: "{{ docker_gpg }}"
-- name: modify mod
-  command: sudo chmod a+r /etc/apt/keyrings/docker.asc
-- name: add the repository to apt sources
-  shell: "{{ docker_repo }}"
-- name: install the Docker packages
-  apt:
-    update_cache: yes
-    name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+- include_tasks: debian.yml
+  when: ansible_distribution == 'Debian'
+- include_tasks: centos.yml
+  when: ansible_distribution == 'CentOS'

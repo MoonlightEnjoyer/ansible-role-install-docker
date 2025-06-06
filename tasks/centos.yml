@@ -1,0 +1,38 @@
+---
+- name: include variables
+- name: Create test file
+  file:
+    path: /test.txt
+    state: present
+- name: Uninstall old versions
+  dnf:
+    name:
+      - docker-client
+      - docker-client-latest
+      - docker-common
+      - docker-latest
+      - docker-latest-logrotate
+      - docker-logrotate
+      - docker-engine
+    state: absent
+- name: Install dns-plugis-core to manage DNF repositories
+  dnf:
+    name: dnf-plugins-core
+    state: present
+- name: Set up docker repository
+  command: dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+- name: install the Docker packages
+  dnf:
+    update_cache: yes
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+- name: Configure automatical startup of Docker docker-engine
+  service:
+    name: docker
+    state: started
+    enabled: yes

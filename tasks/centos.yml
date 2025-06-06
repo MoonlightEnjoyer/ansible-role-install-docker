@@ -1,8 +1,4 @@
 ---
-- name: Create test file
-  file:
-    path: /test.txt
-    state: present
 - name: Uninstall old versions
   dnf:
     name:

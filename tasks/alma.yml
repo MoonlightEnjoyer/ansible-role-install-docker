@@ -1,6 +1,6 @@
 ---
 - name: Uninstall old versions
-  dnf:
+  ansible.builtin.dnf:
     name:
       - docker-client
       - docker-client-latest
@@ -11,14 +11,15 @@
       - docker-engine
     state: absent
 - name: Install dnf-plugins-core to manage DNF repositories
-  dnf:
+  ansible.builtin.dnf:
     name: dnf-plugins-core
     state: present
 - name: Set up docker repository
-  command: dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-- name: install the Docker packages
-  dnf:
-    update_cache: yes
+  ansible.builtin.command: dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  changed_when: true
+- name: Install the Docker packages
+  ansible.builtin.dnf:
+    update_cache: true
     name:
       - docker-ce
       - docker-ce-cli
@@ -27,7 +28,7 @@
       - docker-compose-plugin
     state: present
 - name: Configure automatical startup of Docker docker-engine
-  service:
+  ansible.builtin.service:
     name: docker
     state: started
-    enabled: yes
+    enabled: true

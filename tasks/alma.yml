@@ -10,10 +10,12 @@
       - docker-logrotate
       - docker-engine
     state: absent
+  become: true
 - name: Install dnf-plugins-core to manage DNF repositories
   ansible.builtin.dnf:
     name: dnf-plugins-core
     state: present
+  become: true
 - name: Set up docker repository
   ansible.builtin.command: dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
   changed_when: true
@@ -27,6 +29,7 @@
       - docker-buildx-plugin
       - docker-compose-plugin
     state: present
+  become: true
 - name: Configure automatical startup of Docker docker-engine
   ansible.builtin.service:
     name: docker

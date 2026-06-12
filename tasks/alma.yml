@@ -38,6 +38,7 @@
   become: true
 - name: Reboot host to make kernel modules get effect
   ansible.builtin.reboot:
+  become: true
 - name: Configure automatical startup of Docker docker-engine
   ansible.builtin.service:
     name: docker

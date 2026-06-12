@@ -31,6 +31,13 @@
       - docker-compose-plugin
     state: present
   become: true
+- name: Install kernel-modules-extra package
+  ansible.builtin.dnf:
+    name: kernel-modules-extra
+    state: present
+  become: true
+- name: Reboot host to make kernel modules get effect
+  ansible.builtin.reboot:
 - name: Configure automatical startup of Docker docker-engine
   ansible.builtin.service:
     name: docker

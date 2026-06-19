@@ -1,4 +1,7 @@
 ---
+- name: Update dnf cache
+  ansible.builtin.dnf:
+    update_cache: true
 - name: Uninstall old versions
   ansible.builtin.dnf:
     name:
@@ -22,7 +25,6 @@
   become: true
 - name: Install the Docker packages
   ansible.builtin.dnf:
-    update_cache: true
     name:
       - docker-ce
       - docker-ce-cli
@@ -39,7 +41,7 @@
 - name: Reboot host to make kernel modules get effect
   ansible.builtin.reboot:
   become: true
-- name: Configure automatical startup of Docker docker-engine
+- name: Start and enable docker
   ansible.builtin.service:
     name: docker
     state: started
